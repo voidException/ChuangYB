@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.startup.dao.TestMapper" >
+  <resultMap id="BaseResultMap" type="com.startup.pojo.Test" >
+    <id column="testiD" property="testid" jdbcType="INTEGER" />
+    <result column="itemMain" property="itemmain" jdbcType="VARCHAR" />
+    <result column="optionA" property="optiona" jdbcType="VARCHAR" />
+    <result column="optionB" property="optionb" jdbcType="VARCHAR" />
+    <result column="optionC" property="optionc" jdbcType="VARCHAR" />
+    <result column="optionD" property="optiond" jdbcType="VARCHAR" />
+    <result column="answer" property="answer" jdbcType="INTEGER" />
+    <result column="whyso" property="whyso" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    testiD, itemMain, optionA, optionB, optionC, optionD, answer, whyso
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from test
+    where testiD = #{testid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from test
+    where testiD = #{testid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.startup.pojo.Test" >
+    insert into test (testiD, itemMain, optionA, 
+      optionB, optionC, optionD, 
+      answer, whyso)
+    values (#{testid,jdbcType=INTEGER}, #{itemmain,jdbcType=VARCHAR}, #{optiona,jdbcType=VARCHAR}, 
+      #{optionb,jdbcType=VARCHAR}, #{optionc,jdbcType=VARCHAR}, #{optiond,jdbcType=VARCHAR}, 
+      #{answer,jdbcType=INTEGER}, #{whyso,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.startup.pojo.Test" >
+    insert into test
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="testid != null" >
+        testiD,
+      </if>
+      <if test="itemmain != null" >
+        itemMain,
+      </if>
+      <if test="optiona != null" >
+        optionA,
+      </if>
+      <if test="optionb != null" >
+        optionB,
+      </if>
+      <if test="optionc != null" >
+        optionC,
+      </if>
+      <if test="optiond != null" >
+        optionD,
+      </if>
+      <if test="answer != null" >
+        answer,
+      </if>
+      <if test="whyso != null" >
+        whyso,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="testid != null" >
+        #{testid,jdbcType=INTEGER},
+      </if>
+      <if test="itemmain != null" >
+        #{itemmain,jdbcType=VARCHAR},
+      </if>
+      <if test="optiona != null" >
+        #{optiona,jdbcType=VARCHAR},
+      </if>
+      <if test="optionb != null" >
+        #{optionb,jdbcType=VARCHAR},
+      </if>
+      <if test="optionc != null" >
+        #{optionc,jdbcType=VARCHAR},
+      </if>
+      <if test="optiond != null" >
+        #{optiond,jdbcType=VARCHAR},
+      </if>
+      <if test="answer != null" >
+        #{answer,jdbcType=INTEGER},
+      </if>
+      <if test="whyso != null" >
+        #{whyso,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.startup.pojo.Test" >
+    update test
+    <set >
+      <if test="itemmain != null" >
+        itemMain = #{itemmain,jdbcType=VARCHAR},
+      </if>
+      <if test="optiona != null" >
+        optionA = #{optiona,jdbcType=VARCHAR},
+      </if>
+      <if test="optionb != null" >
+        optionB = #{optionb,jdbcType=VARCHAR},
+      </if>
+      <if test="optionc != null" >
+        optionC = #{optionc,jdbcType=VARCHAR},
+      </if>
+      <if test="optiond != null" >
+        optionD = #{optiond,jdbcType=VARCHAR},
+      </if>
+      <if test="answer != null" >
+        answer = #{answer,jdbcType=INTEGER},
+      </if>
+      <if test="whyso != null" >
+        whyso = #{whyso,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where testiD = #{testid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.startup.pojo.Test" >
+    update test
+    set itemMain = #{itemmain,jdbcType=VARCHAR},
+      optionA = #{optiona,jdbcType=VARCHAR},
+      optionB = #{optionb,jdbcType=VARCHAR},
+      optionC = #{optionc,jdbcType=VARCHAR},
+      optionD = #{optiond,jdbcType=VARCHAR},
+      answer = #{answer,jdbcType=INTEGER},
+      whyso = #{whyso,jdbcType=VARCHAR}
+    where testiD = #{testid,jdbcType=INTEGER}
+  </update>
+</mapper>

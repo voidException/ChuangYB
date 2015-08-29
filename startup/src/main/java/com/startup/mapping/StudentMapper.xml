@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.startup.dao.StudentMapper" >
+  <resultMap id="BaseResultMap" type="com.startup.pojo.Student" >
+    <id column="stuiD" property="stuid" jdbcType="INTEGER" />
+    <result column="stuName" property="stuname" jdbcType="VARCHAR" />
+    <result column="stuNo" property="stuno" jdbcType="VARCHAR" />
+    <result column="stuMajor" property="stumajor" jdbcType="VARCHAR" />
+    <result column="stuSchool" property="stuschool" jdbcType="VARCHAR" />
+    <result column="roomNo" property="roomno" jdbcType="VARCHAR" />
+    <result column="department" property="department" jdbcType="VARCHAR" />
+    <result column="college" property="college" jdbcType="VARCHAR" />
+    <result column="universityNo" property="universityno" jdbcType="VARCHAR" />
+    <result column="universityName" property="universityname" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="BIT" />
+    <result column="inCollege" property="incollege" jdbcType="DATE" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="passwords" property="passwords" jdbcType="VARCHAR" />
+    <result column="photo" property="photo" jdbcType="VARCHAR" />
+    <result column="photoUpload" property="photoupload" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    stuiD, stuName, stuNo, stuMajor, stuSchool, roomNo, department, college, universityNo, 
+    universityName, sex, inCollege, email, passwords, photo, photoUpload
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from student
+    where stuiD = #{stuid,jdbcType=INTEGER}
+  </select>
+  <!--根据用户的email选择出用户  -->
+  <select id="selectByStudentEmail" resultMap="BaseResultMap" parameterType="java.lang.String">
+     select
+     <include refid="Base_Column_List"/>
+     from student
+     where email=#{email,jdbcType=VARCHAR}
+  </select>
+  
+  
+  
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from student
+    where stuiD = #{stuid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.startup.pojo.Student" >
+    insert into student (stuiD, stuName, stuNo, 
+      stuMajor, stuSchool, roomNo, 
+      department, college, universityNo, 
+      universityName, sex, inCollege, 
+      email, passwords, photo, 
+      photoUpload)
+    values (#{stuid,jdbcType=INTEGER}, #{stuname,jdbcType=VARCHAR}, #{stuno,jdbcType=VARCHAR}, 
+      #{stumajor,jdbcType=VARCHAR}, #{stuschool,jdbcType=VARCHAR}, #{roomno,jdbcType=VARCHAR}, 
+      #{department,jdbcType=VARCHAR}, #{college,jdbcType=VARCHAR}, #{universityno,jdbcType=VARCHAR}, 
+      #{universityname,jdbcType=VARCHAR}, #{sex,jdbcType=BIT}, #{incollege,jdbcType=DATE}, 
+      #{email,jdbcType=VARCHAR}, #{passwords,jdbcType=VARCHAR}, #{photo,jdbcType=VARCHAR}, 
+      #{photoupload,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.startup.pojo.Student" >
+    insert into student
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="stuid != null" >
+        stuiD,
+      </if>
+      <if test="stuname != null" >
+        stuName,
+      </if>
+      <if test="stuno != null" >
+        stuNo,
+      </if>
+      <if test="stumajor != null" >
+        stuMajor,
+      </if>
+      <if test="stuschool != null" >
+        stuSchool,
+      </if>
+      <if test="roomno != null" >
+        roomNo,
+      </if>
+      <if test="department != null" >
+        department,
+      </if>
+      <if test="college != null" >
+        college,
+      </if>
+      <if test="universityno != null" >
+        universityNo,
+      </if>
+      <if test="universityname != null" >
+        universityName,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="incollege != null" >
+        inCollege,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="passwords != null" >
+        passwords,
+      </if>
+      <if test="photo != null" >
+        photo,
+      </if>
+      <if test="photoupload != null" >
+        photoUpload,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="stuid != null" >
+        #{stuid,jdbcType=INTEGER},
+      </if>
+      <if test="stuname != null" >
+        #{stuname,jdbcType=VARCHAR},
+      </if>
+      <if test="stuno != null" >
+        #{stuno,jdbcType=VARCHAR},
+      </if>
+      <if test="stumajor != null" >
+        #{stumajor,jdbcType=VARCHAR},
+      </if>
+      <if test="stuschool != null" >
+        #{stuschool,jdbcType=VARCHAR},
+      </if>
+      <if test="roomno != null" >
+        #{roomno,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null" >
+        #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="college != null" >
+        #{college,jdbcType=VARCHAR},
+      </if>
+      <if test="universityno != null" >
+        #{universityno,jdbcType=VARCHAR},
+      </if>
+      <if test="universityname != null" >
+        #{universityname,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=BIT},
+      </if>
+      <if test="incollege != null" >
+        #{incollege,jdbcType=DATE},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="passwords != null" >
+        #{passwords,jdbcType=VARCHAR},
+      </if>
+      <if test="photo != null" >
+        #{photo,jdbcType=VARCHAR},
+      </if>
+      <if test="photoupload != null" >
+        #{photoupload,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.startup.pojo.Student" >
+    update student
+    <set >
+      <if test="stuname != null" >
+        stuName = #{stuname,jdbcType=VARCHAR},
+      </if>
+      <if test="stuno != null" >
+        stuNo = #{stuno,jdbcType=VARCHAR},
+      </if>
+      <if test="stumajor != null" >
+        stuMajor = #{stumajor,jdbcType=VARCHAR},
+      </if>
+      <if test="stuschool != null" >
+        stuSchool = #{stuschool,jdbcType=VARCHAR},
+      </if>
+      <if test="roomno != null" >
+        roomNo = #{roomno,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null" >
+        department = #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="college != null" >
+        college = #{college,jdbcType=VARCHAR},
+      </if>
+      <if test="universityno != null" >
+        universityNo = #{universityno,jdbcType=VARCHAR},
+      </if>
+      <if test="universityname != null" >
+        universityName = #{universityname,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=BIT},
+      </if>
+      <if test="incollege != null" >
+        inCollege = #{incollege,jdbcType=DATE},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="passwords != null" >
+        passwords = #{passwords,jdbcType=VARCHAR},
+      </if>
+      <if test="photo != null" >
+        photo = #{photo,jdbcType=VARCHAR},
+      </if>
+      <if test="photoupload != null" >
+        photoUpload = #{photoupload,jdbcType=BIT},
+      </if>
+    </set>
+    where stuiD = #{stuid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.startup.pojo.Student" >
+    update student
+    set stuName = #{stuname,jdbcType=VARCHAR},
+      stuNo = #{stuno,jdbcType=VARCHAR},
+      stuMajor = #{stumajor,jdbcType=VARCHAR},
+      stuSchool = #{stuschool,jdbcType=VARCHAR},
+      roomNo = #{roomno,jdbcType=VARCHAR},
+      department = #{department,jdbcType=VARCHAR},
+      college = #{college,jdbcType=VARCHAR},
+      universityNo = #{universityno,jdbcType=VARCHAR},
+      universityName = #{universityname,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=BIT},
+      inCollege = #{incollege,jdbcType=DATE},
+      email = #{email,jdbcType=VARCHAR},
+      passwords = #{passwords,jdbcType=VARCHAR},
+      photo = #{photo,jdbcType=VARCHAR},
+      photoUpload = #{photoupload,jdbcType=BIT}
+    where stuiD = #{stuid,jdbcType=INTEGER}
+  </update>
+  
+    <select id="selectStudentsEmail" resultMap="BaseResultMap" parameterType="com.startup.util.Paging">
+     select
+     <include refid="Base_Column_List"/>
+     from student
+     limit #{page}, #{pageSize}
+  </select>
+</mapper>

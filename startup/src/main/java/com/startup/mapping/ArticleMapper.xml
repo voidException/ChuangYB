@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.startup.dao.ArticleMapper" >
+
+  <resultMap id="BaseResultMap" type="com.startup.pojo.Article" ><!--这里的type可以改变为任意类型？  -->
+    <id column="articleiD" property="articleid" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="viceTitle" property="vicetitle" jdbcType="VARCHAR" />
+    <result column="miniPhotoUrl" property="miniphotourl" jdbcType="VARCHAR" />
+    <result column="realUrl" property="realurl" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="articleType" property="articletype" jdbcType="INTEGER" />
+    <result column="labelZero" property="labelzero" jdbcType="INTEGER" />
+    <result column="labelOne" property="labelone" jdbcType="INTEGER" />
+    <result column="labelTwo" property="labeltwo" jdbcType="INTEGER" />
+    <result column="labelThree" property="labelthree" jdbcType="INTEGER" />
+    <result column="labelFour" property="labelfour" jdbcType="INTEGER" />
+    <result column="labelFive" property="labelfive" jdbcType="INTEGER" />
+    <result column="labelSix" property="labelsix" jdbcType="INTEGER" />
+    <result column="comments" property="comments" jdbcType="INTEGER" />
+    <result column="love" property="love" jdbcType="INTEGER" />
+    <result column="collect" property="collect" jdbcType="INTEGER" />
+    <result column="publishTime" property="publishtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    articleiD, title, viceTitle, miniPhotoUrl, realUrl, content, articleType, labelZero, 
+    labelOne, labelTwo, labelThree, labelFour, labelFive, labelSix, comments, love, collect, 
+    publishTime
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from article
+    where articleiD = #{articleid}
+  </select>
+ 
+    
+   <select id="selectByTag" resultMap="BaseResultMap" parameterType="java.util.HashMap"  >
+    select 
+          articleiD, title, viceTitle, miniPhotoUrl, comments, love ,publishTime <!--选择部分属性  -->
+    from 
+          article
+    where  1=1
+    <if test="labelOne != null" >
+        and labelOne = #{labelOne,jdbcType=INTEGER} 
+    </if>
+    <if test="labelTwo != null" >
+        and labelTwo = #{labelTwo,jdbcType=INTEGER} 
+    </if>
+    <if test="labelThree != null" >
+        and labelThree = #{labelThree,jdbcType=INTEGER} 
+    </if>
+    
+    <if test="labelFour != null" >
+        and labelFour = #{labelFour,jdbcType=INTEGER} 
+    </if>
+    
+    <if test="labelFive != null" >
+        and labelFive = #{labelFive,jdbcType=INTEGER} 
+    </if>
+    <if test="labelSix != null" >
+        and labelSix = #{labelSix,jdbcType=INTEGER} 
+    </if>
+    
+    <if test="articleType != null" >
+        and articleType = #{articleType,jdbcType=INTEGER} 
+    </if>
+   <if test="publishTime!= null" >
+        order by publishTime  desc
+    </if>   
+    <if test="comments!= null" >
+        order by love  desc
+    </if>   
+    
+    <if test="labelZero!= null" >
+        order by labelZero  desc
+    </if>  
+     
+    
+    <if test="love != null" >
+        order by love  desc
+    </if>   
+ 
+    limit #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
+   
+  </select>
+  
+  
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from article
+    where articleiD = #{articleid,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="com.startup.pojo.Article" >
+    insert into article (articleiD, title, viceTitle, 
+      miniPhotoUrl, realUrl, content, 
+      articleType, labelZero, labelOne, 
+      labelTwo, labelThree, labelFour, 
+      labelFive, labelSix, comments, 
+      love, collect, publishTime
+      )
+    values (#{articleid,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{vicetitle,jdbcType=VARCHAR}, 
+      #{miniphotourl,jdbcType=VARCHAR}, #{realurl,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
+      #{articletype,jdbcType=INTEGER}, #{labelzero,jdbcType=INTEGER}, #{labelone,jdbcType=INTEGER}, 
+      #{labeltwo,jdbcType=INTEGER}, #{labelthree,jdbcType=INTEGER}, #{labelfour,jdbcType=INTEGER}, 
+      #{labelfive,jdbcType=INTEGER}, #{labelsix,jdbcType=INTEGER}, #{comments,jdbcType=INTEGER}, 
+      #{love,jdbcType=INTEGER}, #{collect,jdbcType=INTEGER}, #{publishtime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.startup.pojo.Article" >
+    insert into article
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="articleid != null" >
+        articleiD,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="vicetitle != null" >
+        viceTitle,
+      </if>
+      <if test="miniphotourl != null" >
+        miniPhotoUrl,
+      </if>
+      <if test="realurl != null" >
+        realUrl,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="articletype != null" >
+        articleType,
+      </if>
+      <if test="labelzero != null" >
+        labelZero,
+      </if>
+      <if test="labelone != null" >
+        labelOne,
+      </if>
+      <if test="labeltwo != null" >
+        labelTwo,
+      </if>
+      <if test="labelthree != null" >
+        labelThree,
+      </if>
+      <if test="labelfour != null" >
+        labelFour,
+      </if>
+      <if test="labelfive != null" >
+        labelFive,
+      </if>
+      <if test="labelsix != null" >
+        labelSix,
+      </if>
+      <if test="comments != null" >
+        comments,
+      </if>
+      <if test="love != null" >
+        love,
+      </if>
+      <if test="collect != null" >
+        collect,
+      </if>
+      <if test="publishtime != null" >
+        publishTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="articleid != null" >
+        #{articleid,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="vicetitle != null" >
+        #{vicetitle,jdbcType=VARCHAR},
+      </if>
+      <if test="miniphotourl != null" >
+        #{miniphotourl,jdbcType=VARCHAR},
+      </if>
+      <if test="realurl != null" >
+        #{realurl,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="articletype != null" >
+        #{articletype,jdbcType=INTEGER},
+      </if>
+      <if test="labelzero != null" >
+        #{labelzero,jdbcType=INTEGER},
+      </if>
+      <if test="labelone != null" >
+        #{labelone,jdbcType=INTEGER},
+      </if>
+      <if test="labeltwo != null" >
+        #{labeltwo,jdbcType=INTEGER},
+      </if>
+      <if test="labelthree != null" >
+        #{labelthree,jdbcType=INTEGER},
+      </if>
+      <if test="labelfour != null" >
+        #{labelfour,jdbcType=INTEGER},
+      </if>
+      <if test="labelfive != null" >
+        #{labelfive,jdbcType=INTEGER},
+      </if>
+      <if test="labelsix != null" >
+        #{labelsix,jdbcType=INTEGER},
+      </if>
+      <if test="comments != null" >
+        #{comments,jdbcType=INTEGER},
+      </if>
+      <if test="love != null" >
+        #{love,jdbcType=INTEGER},
+      </if>
+      <if test="collect != null" >
+        #{collect,jdbcType=INTEGER},
+      </if>
+      <if test="publishtime != null" >
+        #{publishtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.startup.pojo.Article" >
+    update article
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="vicetitle != null" >
+        viceTitle = #{vicetitle,jdbcType=VARCHAR},
+      </if>
+      <if test="miniphotourl != null" >
+        miniPhotoUrl = #{miniphotourl,jdbcType=VARCHAR},
+      </if>
+      <if test="realurl != null" >
+        realUrl = #{realurl,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="articletype != null" >
+        articleType = #{articletype,jdbcType=INTEGER},
+      </if>
+      <if test="labelzero != null" >
+        labelZero = #{labelzero,jdbcType=INTEGER},
+      </if>
+      <if test="labelone != null" >
+        labelOne = #{labelone,jdbcType=INTEGER},
+      </if>
+      <if test="labeltwo != null" >
+        labelTwo = #{labeltwo,jdbcType=INTEGER},
+      </if>
+      <if test="labelthree != null" >
+        labelThree = #{labelthree,jdbcType=INTEGER},
+      </if>
+      <if test="labelfour != null" >
+        labelFour = #{labelfour,jdbcType=INTEGER},
+      </if>
+      <if test="labelfive != null" >
+        labelFive = #{labelfive,jdbcType=INTEGER},
+      </if>
+      <if test="labelsix != null" >
+        labelSix = #{labelsix,jdbcType=INTEGER},
+      </if>
+      <if test="comments != null" >
+        comments = #{comments,jdbcType=INTEGER},
+      </if>
+      <if test="love != null" >
+        love = #{love,jdbcType=INTEGER},
+      </if>
+      <if test="collect != null" >
+        collect = #{collect,jdbcType=INTEGER},
+      </if>
+      <if test="publishtime != null" >
+        publishTime = #{publishtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where articleiD = #{articleid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.startup.pojo.Article" >
+    update article
+    set title = #{title,jdbcType=VARCHAR},
+      viceTitle = #{vicetitle,jdbcType=VARCHAR},
+      miniPhotoUrl = #{miniphotourl,jdbcType=VARCHAR},
+      realUrl = #{realurl,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      articleType = #{articletype,jdbcType=INTEGER},
+      labelZero = #{labelzero,jdbcType=INTEGER},
+      labelOne = #{labelone,jdbcType=INTEGER},
+      labelTwo = #{labeltwo,jdbcType=INTEGER},
+      labelThree = #{labelthree,jdbcType=INTEGER},
+      labelFour = #{labelfour,jdbcType=INTEGER},
+      labelFive = #{labelfive,jdbcType=INTEGER},
+      labelSix = #{labelsix,jdbcType=INTEGER},
+      comments = #{comments,jdbcType=INTEGER},
+      love = #{love,jdbcType=INTEGER},
+      collect = #{collect,jdbcType=INTEGER},
+      publishTime = #{publishtime,jdbcType=TIMESTAMP}
+    where articleiD = #{articleid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyTwo" parameterType="java.util.HashMap" >
+    update 
+       article
+    set    
+      love = #{love,jdbcType=INTEGER}
+   where articleiD = #{articleid,jdbcType=INTEGER}
+  </update>
+  
+  
+</mapper>

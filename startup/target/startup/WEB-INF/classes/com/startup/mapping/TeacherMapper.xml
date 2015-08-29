@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.startup.dao.TeacherMapper" >
+  <resultMap id="BaseResultMap" type="com.startup.pojo.Teacher" >
+    <id column="teacheriD" property="teacherid" jdbcType="INTEGER" />
+    <result column="teacherName" property="teachername" jdbcType="VARCHAR" />
+    <result column="universityNo" property="universityno" jdbcType="VARCHAR" />
+    <result column="universityName" property="universityname" jdbcType="VARCHAR" />
+    <result column="nickUniversityName" property="nickuniversityname" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="passwords" property="passwords" jdbcType="VARCHAR" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <result column="photo" property="photo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    teacheriD, teacherName, universityNo, universityName, nickUniversityName, email, 
+    passwords, tel, photo
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from teacher
+    where teacheriD = #{teacherid,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectByTeacherEmail" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from teacher
+    where email = #{teacherEmail,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from teacher
+    where teacheriD = #{teacherid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.startup.pojo.Teacher" >
+    insert into teacher (teacheriD, teacherName, universityNo, 
+      universityName, nickUniversityName, email, 
+      passwords, tel, photo
+      )
+    values (#{teacherid,jdbcType=INTEGER}, #{teachername,jdbcType=VARCHAR}, #{universityno,jdbcType=VARCHAR}, 
+      #{universityname,jdbcType=VARCHAR}, #{nickuniversityname,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{passwords,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, #{photo,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.startup.pojo.Teacher" >
+    insert into teacher
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="teacherid != null" >
+        teacheriD,
+      </if>
+      <if test="teachername != null" >
+        teacherName,
+      </if>
+      <if test="universityno != null" >
+        universityNo,
+      </if>
+      <if test="universityname != null" >
+        universityName,
+      </if>
+      <if test="nickuniversityname != null" >
+        nickUniversityName,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="passwords != null" >
+        passwords,
+      </if>
+      <if test="tel != null" >
+        tel,
+      </if>
+      <if test="photo != null" >
+        photo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="teacherid != null" >
+        #{teacherid,jdbcType=INTEGER},
+      </if>
+      <if test="teachername != null" >
+        #{teachername,jdbcType=VARCHAR},
+      </if>
+      <if test="universityno != null" >
+        #{universityno,jdbcType=VARCHAR},
+      </if>
+      <if test="universityname != null" >
+        #{universityname,jdbcType=VARCHAR},
+      </if>
+      <if test="nickuniversityname != null" >
+        #{nickuniversityname,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="passwords != null" >
+        #{passwords,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="photo != null" >
+        #{photo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.startup.pojo.Teacher" >
+    update teacher
+    <set >
+      <if test="teachername != null" >
+        teacherName = #{teachername,jdbcType=VARCHAR},
+      </if>
+      <if test="universityno != null" >
+        universityNo = #{universityno,jdbcType=VARCHAR},
+      </if>
+      <if test="universityname != null" >
+        universityName = #{universityname,jdbcType=VARCHAR},
+      </if>
+      <if test="nickuniversityname != null" >
+        nickUniversityName = #{nickuniversityname,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="passwords != null" >
+        passwords = #{passwords,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="photo != null" >
+        photo = #{photo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where teacheriD = #{teacherid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.startup.pojo.Teacher" >
+    update teacher
+    set teacherName = #{teachername,jdbcType=VARCHAR},
+      universityNo = #{universityno,jdbcType=VARCHAR},
+      universityName = #{universityname,jdbcType=VARCHAR},
+      nickUniversityName = #{nickuniversityname,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      passwords = #{passwords,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      photo = #{photo,jdbcType=VARCHAR}
+    where teacheriD = #{teacherid,jdbcType=INTEGER}
+  </update>
+</mapper>

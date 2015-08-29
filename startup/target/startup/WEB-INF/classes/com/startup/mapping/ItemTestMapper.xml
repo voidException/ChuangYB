@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.startup.dao.ItemTestMapper" >
+  <resultMap id="BaseResultMap" type="com.startup.pojo.ItemTest" >
+    <id column="itemiD" property="itemid" jdbcType="INTEGER" />
+    <result column="itemTitle" property="itemtitle" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="itemPhoto" property="itemphoto" jdbcType="VARCHAR" />
+    <result column="activity" property="activity" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    itemiD, itemTitle, description, itemPhoto, activity
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from itemtest
+    where itemiD = #{itemid,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectAllItem" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from itemtest
+  </select>
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from itemtest
+    where itemiD = #{itemid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.startup.pojo.ItemTest" >
+    insert into itemtest (itemiD, itemTitle, description, 
+      itemPhoto, activity)
+    values (#{itemid,jdbcType=INTEGER}, #{itemtitle,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{itemphoto,jdbcType=VARCHAR}, #{activity,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.startup.pojo.ItemTest" >
+    insert into itemtest
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="itemid != null" >
+        itemiD,
+      </if>
+      <if test="itemtitle != null" >
+        itemTitle,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="itemphoto != null" >
+        itemPhoto,
+      </if>
+      <if test="activity != null" >
+        activity,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="itemid != null" >
+        #{itemid,jdbcType=INTEGER},
+      </if>
+      <if test="itemtitle != null" >
+        #{itemtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="itemphoto != null" >
+        #{itemphoto,jdbcType=VARCHAR},
+      </if>
+      <if test="activity != null" >
+        #{activity,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.startup.pojo.ItemTest" >
+    update itemtest
+    <set >
+      <if test="itemtitle != null" >
+        itemTitle = #{itemtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="itemphoto != null" >
+        itemPhoto = #{itemphoto,jdbcType=VARCHAR},
+      </if>
+      <if test="activity != null" >
+        activity = #{activity,jdbcType=INTEGER},
+      </if>
+    </set>
+    where itemiD = #{itemid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.startup.pojo.ItemTest" >
+    update itemtest
+    set itemTitle = #{itemtitle,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      itemPhoto = #{itemphoto,jdbcType=VARCHAR},
+      activity = #{activity,jdbcType=INTEGER}
+    where itemiD = #{itemid,jdbcType=INTEGER}
+  </update>
+</mapper>

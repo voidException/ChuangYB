@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.startup.dao.UnameMapper" >
+  <resultMap id="BaseResultMap" type="com.startup.pojo.Uname" >
+    <id column="unameiD" property="unameid" jdbcType="INTEGER" />
+    <result column="classiD" property="classid" jdbcType="INTEGER" />
+    <result column="itemiD" property="itemid" jdbcType="INTEGER" />
+    <result column="activity" property="activity" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    unameiD, classiD, itemiD, activity
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from uname
+    where unameiD = #{unameid,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectByClassId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from uname
+    where classiD = #{classId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectByClassItemId" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from uname
+    where classiD = #{classId} and itemiD = #{itemId}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from uname
+    where unameiD = #{unameid,jdbcType=INTEGER}
+  </delete>
+  
+   <delete id="deleteByClassItemId" parameterType="java.util.HashMap" >
+    delete from uname
+    where classiD = #{classId} and itemiD = #{itemId}
+  </delete>
+  
+  <insert id="insert" parameterType="com.startup.pojo.Uname" >
+    insert into uname (unameiD, classiD, itemiD, 
+      activity)
+    values (#{unameid,jdbcType=INTEGER}, #{classid,jdbcType=INTEGER}, #{itemid,jdbcType=INTEGER}, 
+      #{activity,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.startup.pojo.Uname" >
+    insert into uname
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="unameid != null" >
+        unameiD,
+      </if>
+      <if test="classid != null" >
+        classiD,
+      </if>
+      <if test="itemid != null" >
+        itemiD,
+      </if>
+      <if test="activity != null" >
+        activity,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="unameid != null" >
+        #{unameid,jdbcType=INTEGER},
+      </if>
+      <if test="classid != null" >
+        #{classid,jdbcType=INTEGER},
+      </if>
+      <if test="itemid != null" >
+        #{itemid,jdbcType=INTEGER},
+      </if>
+      <if test="activity != null" >
+        #{activity,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.startup.pojo.Uname" >
+    update uname
+    <set >
+      <if test="classid != null" >
+        classiD = #{classid,jdbcType=INTEGER},
+      </if>
+      <if test="itemid != null" >
+        itemiD = #{itemid,jdbcType=INTEGER},
+      </if>
+      <if test="activity != null" >
+        activity = #{activity,jdbcType=INTEGER},
+      </if>
+    </set>
+    where unameiD = #{unameid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.startup.pojo.Uname" >
+    update uname
+    set classiD = #{classid,jdbcType=INTEGER},
+      itemiD = #{itemid,jdbcType=INTEGER},
+      activity = #{activity,jdbcType=INTEGER}
+    where unameiD = #{unameid,jdbcType=INTEGER}
+  </update>
+</mapper>

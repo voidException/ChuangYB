@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.startup.dao.CommentsMapper" >
+  <resultMap id="BaseResultMap" type="com.startup.pojo.Comments" >
+    <id column="commentiD" property="commentid" jdbcType="INTEGER" />
+    <result column="articleiD" property="articleid" jdbcType="INTEGER" />
+    <result column="useriD" property="userid" jdbcType="INTEGER" />
+    <result column="userName" property="username" jdbcType="VARCHAR" />
+    <result column="commentTime" property="commenttime" jdbcType="TIMESTAMP" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    commentiD, articleiD, useriD, userName, commentTime, content
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from comments
+    where commentiD = #{commentid,jdbcType=INTEGER}
+  </select>
+  
+  
+  <!-- 
+ <select id="selectByArticleiD" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+     select
+     <include refid="Base_Column_List" />
+     from comments
+     where  articleiD=#{articleiD}, limit #{page，jdbcType=INTEGER},#{pageSize，jdbcType=INTEGER}
+  </select>  
+   -->
+  
+   <!--根据文章的iD，页数，每页大小返回一组评论  ,HashMap版本-->
+   <select id="selectByArticlePrimaryKey" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+  		select
+  		<include refid="Base_Column_List" />
+  		from comments
+  		where articleiD=#{articleiD,jdbcType=INTEGER} limit #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
+   </select>
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from comments
+    where commentiD = #{commentid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.startup.pojo.Comments" >
+    insert into comments (commentiD, articleiD, useriD, 
+      userName, commentTime, content
+      )
+    values (#{commentid,jdbcType=INTEGER}, #{articleid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, 
+      #{username,jdbcType=VARCHAR}, #{commenttime,jdbcType=TIMESTAMP}, #{content,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.startup.pojo.Comments" >
+    insert into comments
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="commentid != null" >
+        commentiD,
+      </if>
+      <if test="articleid != null" >
+        articleiD,
+      </if>
+      <if test="userid != null" >
+        useriD,
+      </if>
+      <if test="username != null" >
+        userName,
+      </if>
+      <if test="commenttime != null" >
+        commentTime,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="commentid != null" >
+        #{commentid,jdbcType=INTEGER},
+      </if>
+      <if test="articleid != null" >
+        #{articleid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="commenttime != null" >
+        #{commenttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.startup.pojo.Comments" >
+    update comments
+    <set >
+      <if test="articleid != null" >
+        articleiD = #{articleid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        useriD = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        userName = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="commenttime != null" >
+        commentTime = #{commenttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where commentiD = #{commentid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.startup.pojo.Comments" >
+    update comments
+    set articleiD = #{articleid,jdbcType=INTEGER},
+      useriD = #{userid,jdbcType=INTEGER},
+      userName = #{username,jdbcType=VARCHAR},
+      commentTime = #{commenttime,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=VARCHAR}
+    where commentiD = #{commentid,jdbcType=INTEGER}
+  </update>
+</mapper>

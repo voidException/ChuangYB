@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.startup.dao.ClassStudentMapper" >
+  <resultMap id="BaseResultMap" type="com.startup.pojo.ClassStudent" >
+    <id column="classStuiD" property="classstuid" jdbcType="INTEGER" />
+    <result column="classiD" property="classid" jdbcType="INTEGER" />
+    <result column="stuiD" property="stuid" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    classStuiD, classiD, stuiD
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from classstudent
+    where classStuiD = #{classstuid,jdbcType=INTEGER}
+  </select>
+  
+ <!-- 通过学生id查找对象 -->
+  <select id="selectByStudentId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from classstudent
+    where stuiD = #{stuId,jdbcType=INTEGER}
+  </select>
+  
+  
+  <select id="selectByClassId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from classstudent
+    where classiD = #{classId,jdbcType=INTEGER}
+  </select>
+  
+  
+  <!-- 通过学生id班级id查找对象 -->
+  <select id="selectByStuIdClassId" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from classstudent
+    where stuiD = #{stuId} and classiD = #{classId}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from classstudent
+    where classStuiD = #{classstuid,jdbcType=INTEGER}
+  </delete>
+  
+  <delete id="deleteByStuIdClassId" parameterType="java.util.HashMap" >
+    delete from classstudent
+    where stuiD = #{stuId} and classiD = #{classId}
+  </delete>
+  
+  <insert id="insert" parameterType="com.startup.pojo.ClassStudent" >
+    insert into classstudent (classStuiD, classiD, stuiD
+      )
+    values (#{classstuid,jdbcType=INTEGER}, #{classid,jdbcType=INTEGER}, #{stuid,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.startup.pojo.ClassStudent" >
+    insert into classstudent
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="classstuid != null" >
+        classStuiD,
+      </if>
+      <if test="classid != null" >
+        classiD,
+      </if>
+      <if test="stuid != null" >
+        stuiD,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="classstuid != null" >
+        #{classstuid,jdbcType=INTEGER},
+      </if>
+      <if test="classid != null" >
+        #{classid,jdbcType=INTEGER},
+      </if>
+      <if test="stuid != null" >
+        #{stuid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.startup.pojo.ClassStudent" >
+    update classstudent
+    <set >
+      <if test="classid != null" >
+        classiD = #{classid,jdbcType=INTEGER},
+      </if>
+      <if test="stuid != null" >
+        stuiD = #{stuid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where classStuiD = #{classstuid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.startup.pojo.ClassStudent" >
+    update classstudent
+    set classiD = #{classid,jdbcType=INTEGER},
+      stuiD = #{stuid,jdbcType=INTEGER}
+    where classStuiD = #{classstuid,jdbcType=INTEGER}
+  </update>
+</mapper>
